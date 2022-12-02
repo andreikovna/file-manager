@@ -1,0 +1,21 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "cli file manager",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreikovna/file-manager.git"
+  },
+  "author": "andreikovna",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreikovna/file-manager/issues"
+  },
+  "homepage": "https://github.com/andreikovna/file-manager#readme"
+}
