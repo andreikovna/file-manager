@@ -23,9 +23,10 @@ const app = async () => {
 
   stdin.on("data", async (data) => {
     const receivedData = data.toString().trim();
-    const [command, argument] = receivedData
-      .split(" ")
-      .map((item) => item.trim());
+    const [command, argument] =
+      receivedData.includes(`"`) || receivedData.includes(`'`)
+        ? receivedData.split(/'|"/).map((item) => item.trim())
+        : receivedData.split(" ").map((item) => item.trim());
     switch (command) {
       case EXIT: {
         process.exit();
@@ -42,8 +43,9 @@ const app = async () => {
         await nav_ls(currentPath);
         break;
       }
-      default: console.log('Operation failed');
-      break;
+      default:
+        console.log("Operation failed");
+        break;
     }
 
     console.log(`You are currently in ${currentPath}`);
@@ -53,7 +55,7 @@ const app = async () => {
     process.exit();
   });
   process.on("exit", () =>
-    stdout.write(`Thank you for using File Manager, ${userName}, goodbye!`)
+    stdout.write(`Thank you for using File Manager, ${userName}, goodbye!\n`)
   );
 };
 

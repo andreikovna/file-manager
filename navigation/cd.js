@@ -10,6 +10,7 @@ export const nav_cd = async (prevPath, newPath) => {
   const currentPath = path.isAbsolute(newPath)
     ? newPath
     : path.join(prevPath, newPath);
+    
   try {
     await access(currentPath);
     return currentPath;
