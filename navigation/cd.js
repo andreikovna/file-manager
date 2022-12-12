@@ -1,15 +1,13 @@
-import path from "path";
 import { nav_up } from "./up.js";
 import { access } from "fs/promises";
+import { getPath } from "../utils/getPath.js";
 
 export const nav_cd = async (prevPath, newPath) => {
   if (newPath === "..") {
     return nav_up(prevPath);
   }
 
-  const currentPath = path.isAbsolute(newPath)
-    ? newPath
-    : path.join(prevPath, newPath);
+  const currentPath = getPath(prevPath, newPath);
     
   try {
     await access(currentPath);
