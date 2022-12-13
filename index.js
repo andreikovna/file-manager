@@ -4,7 +4,7 @@ import { EXIT, FO_SERVICE, NAV_SERVICE } from "./utils/constants.js";
 import { getHomeDirectory } from "./utils/getHomeDirectory.js";
 import { getUserName } from "./utils/getUserName.js";
 import { nav_cd, nav_up, nav_ls } from "./navigation/index.js";
-import { cat, add } from "./files_operation/index.js";
+import { cat, add, rename } from "./files_operation/index.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,9 +24,9 @@ const app = async () => {
 
   stdin.on("data", async (data) => {
     const receivedData = data.toString().trim();
-    const [command, argument] =
-      receivedData.includes(`"`) || receivedData.includes(`'`)
-        ? receivedData.split(/'|"/).map((item) => item.trim())
+    const [command, argument, argument2] =
+      receivedData.includes(`"`)
+        ? receivedData.split(`"`).map((item) => item.trim())
         : receivedData.split(" ").map((item) => item.trim());
     switch (command) {
       case EXIT: {
@@ -50,6 +50,10 @@ const app = async () => {
       }
       case FO_SERVICE.add: {
         await add(currentPath, argument);
+        break;
+      }
+      case FO_SERVICE.rename: {
+        await rename(currentPath, argument, argument2);
         break;
       }
       default:
