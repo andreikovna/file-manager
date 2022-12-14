@@ -1,10 +1,11 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { EXIT, FO_SERVICE, NAV_SERVICE } from "./utils/constants.js";
+import { EXIT, FO_SERVICE, NAV_SERVICE, OS } from "./utils/constants.js";
 import { getHomeDirectory } from "./utils/getHomeDirectory.js";
 import { getUserName } from "./utils/getUserName.js";
 import { nav_cd, nav_up, nav_ls } from "./navigation/index.js";
 import { cat, add, rename, copy, del, move } from "./files_operation/index.js";
+import { os_functions } from "./operation_system/os_functions.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -66,6 +67,10 @@ const app = async () => {
       }
       case FO_SERVICE.move: {
         await move(currentPath, argument, argument2);
+        break;
+      }
+      case OS: {
+        os_functions(argument);
         break;
       }
       default:

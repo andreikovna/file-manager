@@ -13,4 +13,14 @@ export const FO_SERVICE = {
   delete: "rm",
 };
 
+export const OS = 'os';
+
+export const OS_SERVICE = {
+  eol: "--EOL",
+  cpus: "--cpus",
+  homedir: "--homedir",
+  username: "--username",
+  architecture: "--architecture",
+};
+
 export const EXIT = ".exit";
