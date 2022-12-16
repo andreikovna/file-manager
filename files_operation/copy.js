@@ -4,10 +4,9 @@ import path from "path";
 import fs from "fs";
 
 export const copy = async (currentPath, pathToFile, newPath) => {
-  const fileToCopy = getPath(currentPath, pathToFile);
-  const newFileDirectory = getPath(currentPath, newPath);
-
   try {
+    const fileToCopy = getPath(currentPath, pathToFile);
+    const newFileDirectory = getPath(currentPath, newPath);
     const isFile = (await stat(fileToCopy)).isFile();
     const fileName = path.basename(fileToCopy);
     const isDirectory = (await stat(newFileDirectory)).isDirectory();

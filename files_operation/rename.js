@@ -3,10 +3,9 @@ import path from "path";
 import { rename as renameFile, access } from "node:fs/promises";
 
 export const rename = async (currentPath, pathToFile, newFileName) => {
-  const fileToRename = getPath(currentPath, pathToFile);
-  const newFilePath = path.join(path.dirname(fileToRename), newFileName);
-
-  try {
+   try {
+    const fileToRename = getPath(currentPath, pathToFile);
+    const newFilePath = path.join(path.dirname(fileToRename), newFileName);
     await access(fileToRename);
     const isNewFileExist = await access(newFilePath)
       .then(() => true)
