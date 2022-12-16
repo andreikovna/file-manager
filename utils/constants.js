@@ -23,4 +23,10 @@ export const OS_SERVICE = {
   architecture: "--architecture",
 };
 
+export const HASH = 'hash';
+
+export const COMPRESS = 'compress';
+
+export const DECOMPRESS = 'decompress';
+
 export const EXIT = ".exit";

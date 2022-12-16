@@ -1,14 +1,12 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { EXIT, FO_SERVICE, NAV_SERVICE, OS } from "./utils/constants.js";
+import { COMPRESS, DECOMPRESS, EXIT, FO_SERVICE, HASH, NAV_SERVICE, OS } from "./utils/constants.js";
 import { getHomeDirectory } from "./utils/getHomeDirectory.js";
 import { getUserName } from "./utils/getUserName.js";
 import { nav_cd, nav_up, nav_ls } from "./navigation/index.js";
 import { cat, add, rename, copy, del, move } from "./files_operation/index.js";
 import { os_functions } from "./operation_system/os_functions.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { getHush } from "./other/getHush.js";
+import { compressFile } from "./other/compressFile.js";
+import { decompressFile } from "./other/decompressFile.js";
 
 const { stdout, stdin } = process;
 
@@ -71,6 +69,18 @@ const app = async () => {
       }
       case OS: {
         os_functions(argument);
+        break;
+      }
+      case HASH: {
+        await getHush(currentPath, argument);
+        break;
+      }
+      case COMPRESS: {
+        await compressFile(currentPath, argument, argument2);
+        break;
+      }
+      case DECOMPRESS: {
+        await decompressFile(currentPath, argument, argument2);
         break;
       }
       default:
