@@ -3,7 +3,7 @@ import { access } from "fs/promises";
 import { getPath } from "../utils/getPath.js";
 
 export const nav_cd = async (prevPath, newPath) => {
-  if (newPath === "..") {
+  if (newPath === ".." || newPath === "/") {
     return nav_up(prevPath);
   }
 
