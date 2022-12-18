@@ -10,10 +10,12 @@ export const decompressFile = async (
 ) => {
   try {
     const fileToDecompress = await getPath(currentPath, pathToFile);
-    const decompressedPath = await getPath(currentPath, pathToDestination);
     await access(fileToDecompress).catch(() => {
-        throw new Error();
-      });
+      throw new Error();
+    });
+    
+    const decompressedPath = await getPath(currentPath, pathToDestination);
+    
     const readStream = fs.createReadStream(fileToDecompress);
     const writeStream = fs.createWriteStream(decompressedPath);
 
