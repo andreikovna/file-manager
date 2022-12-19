@@ -12,6 +12,9 @@ export const compressFile = async (
 ) => {
   try {
     const fileToCompress = await getPath(currentPath, pathToFile);
+    await access(fileToCompress).catch(() => {
+      throw new Error();
+    });
 
     const fileName = `${path.basename(fileToCompress).split(".")[0]}.br`;
     const newFilePath = await getPath(currentPath, pathToDestination);
@@ -20,12 +23,11 @@ export const compressFile = async (
     const writeStream = fs.createWriteStream(path.join(newFilePath, fileName));
     const archivator = zlib.createBrotliCompress({
       params: {
-        [constants.BROTLI_PARAM_QUALITY]: constants.BROTLI_MIN_QUALITY,
+        [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MIN_QUALITY,
       },
     });
 
     await pipeline(readStream, archivator, writeStream);
-    
     console.log("Done!");
   } catch (err) {
     console.log("Operation failed");
