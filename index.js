@@ -1,4 +1,12 @@
-import { COMPRESS, DECOMPRESS, EXIT, FO_SERVICE, HASH, NAV_SERVICE, OS } from "./utils/constants.js";
+import {
+  COMPRESS,
+  DECOMPRESS,
+  EXIT,
+  FO_SERVICE,
+  HASH,
+  NAV_SERVICE,
+  OS,
+} from "./utils/constants.js";
 import { getHomeDirectory } from "./utils/getHomeDirectory.js";
 import { getUserName } from "./utils/getUserName.js";
 import { nav_cd, nav_up, nav_ls } from "./navigation/index.js";
@@ -23,10 +31,27 @@ const app = async () => {
 
   stdin.on("data", async (data) => {
     const receivedData = data.toString().trim();
-    const [command, argument, argument2] =
-      receivedData.includes(`"`)
-        ? receivedData.split(`"`).map((item) => item.trim())
-        : receivedData.split(" ").map((item) => item.trim());
+    let command;
+    let argument;
+    let argument2;
+    let argumentsLine = receivedData.split(" ").map((item) => item.trim());
+    command = argumentsLine.shift();
+    argumentsLine = argumentsLine.join(" ").trim();
+
+    const quotasFound = [...argumentsLine.matchAll(/["]/g)].length;
+    if (quotasFound % 2 > 0) {
+      console.log("Operation failed");
+      command = null;
+    } else {
+      const smth = argumentsLine.includes(`"`)
+        ? argumentsLine
+            .split(`"`)
+            .filter((item) => item !== "" && item !== " ")
+            .map((item) => item.trim())
+        : argumentsLine.split(" ").map((item) => item.trim());
+      [argument, argument2] = smth;
+    }
+
     switch (command) {
       case EXIT: {
         process.exit();
