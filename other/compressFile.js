@@ -16,7 +16,7 @@ export const compressFile = async (
       throw new Error();
     });
 
-    const fileName = `${path.basename(fileToCompress).split(".")[0]}.br`;
+    const fileName = `${path.basename(fileToCompress)}.br`;
     const newFilePath = await getPath(currentPath, pathToDestination);
 
     const readStream = fs.createReadStream(fileToCompress, "utf-8");
