@@ -8,6 +8,7 @@ export const FO_SERVICE = {
   cat: "cat",
   add: "add",
   rename: "rn",
+  renameAll: "rnAll",
   copy: "cp",
   move: "mv",
   delete: "rm",

@@ -7,6 +7,7 @@ import { os_functions } from "./operation_system/os_functions.js";
 import { getHush } from "./other/getHush.js";
 import { compressFile } from "./other/compressFile.js";
 import { decompressFile } from "./other/decompressFile.js";
+import { renameAll } from "./files_operation/renameFunction.js";
 
 const { stdout, stdin } = process;
 
@@ -53,6 +54,10 @@ const app = async () => {
       }
       case FO_SERVICE.rename: {
         await rename(currentPath, argument, argument2);
+        break;
+      }
+      case FO_SERVICE.renameAll: {
+        await renameAll(currentPath);
         break;
       }
       case FO_SERVICE.copy: {
