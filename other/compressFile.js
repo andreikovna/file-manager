@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as zlib from "zlib";
 import * as path from "path";
 import { access } from "node:fs/promises";
+import { pipeline } from "stream/promises";
 
 export const compressFile = async (
   currentPath,
@@ -14,18 +15,20 @@ export const compressFile = async (
     await access(fileToCompress).catch(() => {
       throw new Error();
     });
-    const fileName = `${path.basename(fileToCompress).split(".")[0]}.br`;
+
+    const fileName = `${path.basename(fileToCompress)}.br`;
     const newFilePath = await getPath(currentPath, pathToDestination);
+
     const readStream = fs.createReadStream(fileToCompress, "utf-8");
     const writeStream = fs.createWriteStream(path.join(newFilePath, fileName));
-    const archivator = zlib.createBrotliCompress();
+    const archivator = zlib.createBrotliCompress({
+      params: {
+        [zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MIN_QUALITY,
+      },
+    });
 
-    readStream
-      .pipe(archivator)
-      .pipe(writeStream)
-      .on("finish", () => {
-        fs.rm(fileToCompress, () => console.log("Done!"));
-      });
+    await pipeline(readStream, archivator, writeStream);
+    console.log("Done!");
   } catch (err) {
     console.log("Operation failed");
   }
