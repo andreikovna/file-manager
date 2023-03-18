@@ -1,23 +1,5 @@
-// import { readdir } from "node:fs/promises";
-// import { rename as renameFile } from "node:fs/promises";
-
-// const pathToRead = './files_operation';
-// const columns = ["name", "type"];
-
-// const files = await readdir(pathToRead, { withFileTypes: true });
-// const resultTable = files
-//   .map((file) => {
-//     return { name: file.name };
-//   })
-//   .sort((a, b) => (a.name > b.name ? -1 : 1))
-
-//   files.forEach(async (file) => {
-//     await renameFile(file, newFilePath);
-//   })
-// console.table(resultTable, columns);
-
 import path from "path";
-import { rename as renameFile, access } from "node:fs/promises";
+import { rename as renameFile } from "node:fs/promises";
 import { readdir } from "node:fs/promises";
 
 export const renameAll = async (currentPath) => {
